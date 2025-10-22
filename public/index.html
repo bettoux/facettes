@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Facettes - Speaker Bureau</title>
+
+    <!-- LOCAL Tailwind (built to ./css/tailwind.css) -->
+    <!--<link rel="stylesheet" href="/css/tailwind.css">-->
+    <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'bg-main': '#FFFFFF',
+          'bg-section': '#eeeeee',
+          'text-dark': '#000000',
+          'text-light': '#FFFFFF',
+          'text-detail': '#555555',
+          'accent-purple': '#7877E6',
+          'accent-hover-purple': '#5C5BCC',
+        },
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+
+
+
+    <!-- Custom styles (keeps your original look & feel) -->
+    <!--<style>
+        /* Your original CSS from part1/part2 kept verbatim where possible */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --white: #FFFFFF;
+            --grey: #F4F4F3;
+            --purple: #7877E6;
+            --dark-grey: #4F4F4F;
+            --black: #000000;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--black);
+            line-height: 1.6;
+            background: var(--white);
+        }
+        header { background: var(--white); padding: 1rem 2rem; border-bottom: 1px solid var(--grey); position: sticky; top: 0; z-index: 1000; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--black); text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+        nav { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        nav a { color: var(--dark-grey); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; white-space: nowrap; }
+        nav a:hover { color: var(--purple); }
+        .language-switcher { display: flex; gap: 0.5rem; align-items: center; }
+        .lang-btn { background: none; border: 2px solid var(--grey); color: var(--dark-grey); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s; font-weight: 600; }
+        .lang-btn:hover { border-color: var(--purple); color: var(--purple); }
+        .lang-btn.active { background: var(--purple); border-color: var(--purple); color: var(--white); }
+        .hero { background: var(--grey); padding: 4rem 2rem 3rem; text-align: center; }
+        .hero-content { max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
+        .hero p { font-size: clamp(1rem, 2.5vw, 1.25rem); color: var(--dark-grey); margin-bottom: 2rem; }
+        .controls { max-width: 1400px; margin: 0 auto; padding: 2rem 1rem 1rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; scroll-margin-top: 100px; }
+        .search-box { flex: 1; min-width: 250px; position: relative; }
+        .search-box input { width: 100%; padding: 0.75rem 1rem; border: 2px solid var(--grey); border-radius: 4px; font-size: 1rem; transition: border-color 0.3s; }
+        .search-box input:focus { outline: none; border-color: var(--purple); }
+        .filter-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .filter-btn { padding: 0.75rem 1.5rem; border: 2px solid var(--grey); background: var(--white); color: var(--dark-grey); border-radius: 4px; cursor: pointer; font-size: 0.95rem; transition: all 0.3s; white-space: nowrap; }
+        .filter-btn:hover { border-color: var(--purple); color: var(--purple); }
+        .filter-btn.active { background: var(--purple); border-color: var(--purple); color: var(--white); }
+        .speakers-container { max-width: 1400px; margin: 0 auto; padding: 3rem 1rem; overflow: visible; min-height: 60vh; }
+        .speakers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; align-items: start; position: relative; justify-content: center; }
+        @media (min-width: 1200px) {
+            .speakers-grid[data-count="1"], .speakers-grid[data-count="2"], .speakers-grid[data-count="3"], .speakers-grid[data-count="4"] {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+                max-width: 1400px;
+            }
+        }
+        .speaker-card { position: relative; aspect-ratio: 4/5; overflow: hidden; cursor: pointer; background: var(--grey); opacity: 0; animation: fadeInUp 0.6s ease forwards; will-change: transform; border-radius: 24px; }
+        .speaker-image-container { width: 100%; height: 100%; position: relative; overflow: hidden; }
+        .speaker-image-container::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 30%, transparent 50%); opacity: 1; transition: opacity 0.4s ease; }
+        .speaker-card:hover { z-index: 10; }
+        @keyframes fadeInUp { from { opacity: 0; } to { opacity: 1; } }
+        .speaker-card:nth-child(4n+1) { margin-top: 0; }
+        .speaker-card:nth-child(4n+2) { margin-top: 1.5rem; }
+        .speaker-card:nth-child(4n+3) { margin-top: 3rem; }
+        .speaker-card:nth-child(4n+4) { margin-top: 0.75rem; }
+        .speaker-card:hover .speaker-image-container::after { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 70%); }
+        .speaker-image-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 5rem; color: var(--dark-grey); transition: transform 0.6s ease; }
+        .speaker-card:hover .speaker-image-bg { transform: scale(1.05); }
+        .speaker-image-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+        .speaker-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; color: var(--white); z-index: 2; }
+        .speaker-card:hover .speaker-info { transform: translateY(0); }
+        .speaker-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.2; opacity: 1; transform: translateY(0); transition: all 0.4s ease; }
+        .speaker-details { max-height: 0; overflow: hidden; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
+        .speaker-card:hover .speaker-details { max-height: 200px; opacity: 1; transform: translateY(0); }
+        .speaker-title { font-size: 0.95rem; opacity: 0.9; margin-bottom: 0.75rem; }
+        .speaker-topics { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+        .topic-tag { background: rgba(255,255,255,0.2); color: var(--white); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; backdrop-filter: blur(10px); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; overflow-y: auto; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal.active { display: flex; align-items: center; justify-content: center; padding: 1rem; }
+        .modal-content { background: var(--white); max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: var(--purple); color: var(--white); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: opacity 0.3s; }
+        .modal-close:hover { opacity: 0.8; }
+        .modal-image { width: 100%; height: 400px; background: var(--grey); display: flex; align-items: center; justify-content: center; font-size: 6rem; color: var(--dark-grey); overflow: hidden; }
+        .modal-image img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-info { padding: 2rem; }
+        .modal-name { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 0.5rem; }
+        .modal-title { color: var(--dark-grey); font-size: clamp(1rem, 2vw, 1.1rem); margin-bottom: 2rem; }
+        .modal-bio { line-height: 1.8; margin-bottom: 2rem; color: var(--dark-grey); }
+        .modal-section { margin-bottom: 2rem; }
+        .modal-section h3 { font-size: clamp(1.1rem, 2.5vw, 1.3rem); margin-bottom: 1rem; color: var(--purple); }
+        .modal-section ul { list-style: none; padding-left: 0; }
+        .modal-section li { padding: 0.5rem 0; color: var(--dark-grey); }
+        .modal-section li:before { content: "→ "; color: var(--purple); font-weight: bold; margin-right: 0.5rem; }
+        .contact-btn { background: var(--purple); color: var(--white); padding: 1rem 2rem; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; transition: opacity 0.3s; width: 100%; }
+        .contact-btn:hover { opacity: 0.9; }
+        footer { background: var(--black); color: var(--white); padding: 3rem 2rem; margin-top: 4rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; text-align: center; }
+        .no-results { text-align: center; padding: 4rem 2rem; color: var(--dark-grey); }
+        .loading { text-align: center; padding: 4rem 2rem; color: var(--dark-grey); }
+        .load-more-container { text-align: center; padding: 3rem 2rem; }
+        .load-more-btn { background: var(--purple); color: var(--white); padding: 1rem 3rem; border: 2px solid var(--purple); border-radius: 4px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-block; }
+        .load-more-btn:hover { background: var(--white); color: var(--purple); }
+        .load-more-btn.hidden { display: none; }
+        .featured-section { background: var(--grey); padding: 4rem 2rem; margin: 4rem 0; }
+        .featured-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .featured-text h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
+        .featured-text p { font-size: 1.1rem; color: var(--dark-grey); line-height: 1.8; margin-bottom: 1rem; }
+        .featured-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 2rem; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 3rem; font-weight: 700; color: var(--purple); line-height: 1; }
+        .stat-label { font-size: 0.95rem; color: var(--dark-grey); margin-top: 0.5rem; }
+        .featured-image { aspect-ratio: 1; background: var(--white); border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 8rem; color: var(--dark-grey); }
+        .featured-image img { width: 100%; height: 100%; object-fit: cover; }
+        .expertise-section { max-width: 1400px; margin: 4rem auto; padding: 2rem 1rem; }
+        .expertise-section h2 { font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 3rem; text-align: center; }
+        .expertise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .expertise-card { background: var(--grey); padding: 2rem; border-radius: 8px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .expertise-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .expertise-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .expertise-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--purple); }
+        .expertise-card p { color: var(--dark-grey); line-height: 1.6; }
+        .cta-section { background: var(--purple); color: var(--white); padding: 4rem 2rem; text-align: center; margin: 4rem 0 0 0; }
+        .cta-content { max-width: 800px; margin: 0 auto; }
+        .cta-section h2 { font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.95; }
+        .cta-button { background: var(--white); color: var(--purple); padding: 1rem 3rem; border: 2px solid var(--white); border-radius: 4px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+        .cta-button:hover { background: transparent; color: var(--white); }
+        @media (max-width: 768px) {
+            .featured-content { grid-template-columns: 1fr; gap: 2rem; }
+            .featured-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .stat-number { font-size: 2rem; }
+            .expertise-grid { grid-template-columns: 1fr; }
+            .header-content { justify-content: center; }
+            .header-right { width: 100%; justify-content: space-between; }
+            nav { order: 3; width: 100%; justify-content: center; }
+            .language-switcher { order: 2; }
+            .speakers-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+            .speaker-card:nth-child(4n+1), .speaker-card:nth-child(4n+2), .speaker-card:nth-child(4n+3), .speaker-card:nth-child(4n+4) { margin-top: 0; }
+            .speaker-card:nth-child(2n+1) { margin-top: 0; }
+            .speaker-card:nth-child(2n+2) { margin-top: 1rem; }
+            .speaker-info { padding: 1.5rem 1rem 1rem; }
+            .speaker-name { font-size: 1.25rem; }
+            .speaker-title { font-size: 0.875rem; }
+            .modal-info { padding: 1.5rem; }
+            .contact-btn { padding: 0.875rem 1.5rem; }
+        }
+        @media (max-width: 480px) {
+            header { padding: 1rem; }
+            .logo { font-size: 1.25rem; }
+            .hero { padding: 3rem 1rem 2rem; }
+            .controls { padding: 1.5rem 1rem 0.5rem; }
+            .filter-btn { padding: 0.625rem 1rem; font-size: 0.875rem; }
+            .speakers-grid { grid-template-columns: 1fr; }
+            .speaker-card:nth-child(2n+1), .speaker-card:nth-child(2n+2) { margin-top: 0; }
+            .modal-image { height: 300px; font-size: 4rem; }
+        }
+        @media (min-width: 1200px) {
+            .speakers-grid { grid-template-columns: repeat(4, 1fr); }
+            .speaker-card:nth-child(4n+1) { margin-top: 3rem; }
+            .speaker-card:nth-child(4n+2) { margin-top: 3rem; }
+            .speaker-card:nth-child(4n+3) { margin-top: 3rem; }
+            .speaker-card:nth-child(4n+4) { margin-top: 3rem; }
+        }
+        @media (min-width: 769px) and (max-width: 1199px) {
+            .speaker-card:nth-child(4n+1), .speaker-card:nth-child(4n+2), .speaker-card:nth-child(4n+3), .speaker-card:nth-child(4n+4) { margin-top: 0; }
+            .speaker-card:nth-child(3n+1) { margin-top: 0; }
+            .speaker-card:nth-child(3n+2) { margin-top: 1.5rem; }
+            .speaker-card:nth-child(3n+3) { margin-top: 3rem; }
+        }
+        /* Animations/spinner */
+        .spinner { border: 4px solid rgba(0,0,0,0.2); border-top: 4px solid #7877E6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .page-content { display: none; } .page-content.active { display: block; }
+    </style>-->
+
+
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --white: #FFFFFF;
+            --grey: #F4F4F3;
+            --purple: #7877E6;
+            --dark-grey: #4F4F4F;
+            --black: #000000;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--black);
+            line-height: 1.6;
+            background: var(--white);
+        }
+
+        header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--grey);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--dark-grey);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: var(--purple);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 2px solid var(--grey);
+            color: var(--dark-grey);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--purple);
+            color: var(--purple);
+        }
+
+        .lang-btn.active {
+            background: var(--purple);
+            border-color: var(--purple);
+            color: var(--white);
+        }
+
+        .hero {
+            background: var(--grey);
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: var(--dark-grey);
+            margin-bottom: 2rem;
+        }
+
+        .controls {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--grey);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--purple);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--grey);
+            background: var(--white);
+            color: var(--dark-grey);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--purple);
+            color: var(--purple);
+        }
+
+        .filter-btn.active {
+            background: var(--purple);
+            border-color: var(--purple);
+            color: var(--white);
+        }
+
+        .speakers-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+            overflow: visible;
+            min-height: 60vh;
+        }
+
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            align-items: start;
+            position: relative;
+            justify-content: center;
+        }
+
+         /* Center grid when few speakers */
+        @media (min-width: 1200px) {
+            .speakers-grid[data-count="1"],
+            .speakers-grid[data-count="2"],
+            .speakers-grid[data-count="3"],
+            .speakers-grid[data-count="4"] {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+                max-width: 1400px;
+            }
+        }
+
+        .speaker-card {
+            position: relative;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--grey);
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            will-change: transform;
+            border-radius: 24px;
+        }
+
+        .speaker-image-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .speaker-image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 30%, transparent 50%);
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+
+        .speaker-card:hover {
+            z-index: 10;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Staggered vertical offset for columns - creates the misaligned effect */
+        .speaker-card:nth-child(4n+1) {
+            margin-top: 0;
+        }
+
+        .speaker-card:nth-child(4n+2) {
+            margin-top: 1.5rem;
+        }
+
+        .speaker-card:nth-child(4n+3) {
+            margin-top: 3rem;
+        }
+
+        .speaker-card:nth-child(4n+4) {
+            margin-top: 0.75rem;
+        }
+
+        .speaker-card:hover .speaker-image-container::after {
+            opacity: 1;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 70%);
+        }
+
+        /* Remove animation delays that might interfere */
+        .speaker-card:nth-child(1) { animation-delay: 0s; }
+        .speaker-card:nth-child(2) { animation-delay: 0.1s; }
+        .speaker-card:nth-child(3) { animation-delay: 0.2s; }
+        .speaker-card:nth-child(4) { animation-delay: 0.3s; }
+        .speaker-card:nth-child(5) { animation-delay: 0s; }
+        .speaker-card:nth-child(6) { animation-delay: 0.1s; }
+        .speaker-card:nth-child(7) { animation-delay: 0.2s; }
+        .speaker-card:nth-child(8) { animation-delay: 0.3s; }
+        .speaker-card:nth-child(n+9) { animation-delay: 0s; }
+
+        /*.speaker-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }*/
+
+        .speaker-image-bg {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--dark-grey);
+            transition: transform 0.6s ease;
+        }
+
+        .speaker-card:hover .speaker-image-bg {
+            transform: scale(1.05);
+        }
+
+        .speaker-image-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /*.speaker-image {
+            width: 100%;
+            height: 300px;
+            background: var(--grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--dark-grey);
+            overflow: hidden;
+        }
+
+        .speaker-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }*/
+
+        .speaker-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            color: var(--white);
+            z-index: 2;
+        }
+
+        .speaker-card:hover .speaker-info {
+            transform: translateY(0);
+        }
+
+        .speaker-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.4s ease;
+        }
+
+        .speaker-details {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .speaker-card:hover .speaker-details {
+            max-height: 200px; /* Enough to show content */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .speaker-title {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 0.75rem;
+        }
+
+        .speaker-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .topic-tag {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--white);
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--purple);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: opacity 0.3s;
+        }
+
+        .modal-close:hover {
+            opacity: 0.8;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            background: var(--grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: var(--dark-grey);
+            overflow: hidden;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-info {
+            padding: 2rem;
+        }
+
+        .modal-name {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-title {
+            color: var(--dark-grey);
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            margin-bottom: 2rem;
+        }
+
+        .modal-bio {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: var(--dark-grey);
+        }
+
+        .modal-section {
+            margin-bottom: 2rem;
+        }
+
+        .modal-section h3 {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            margin-bottom: 1rem;
+            color: var(--purple);
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .modal-section li {
+            padding: 0.5rem 0;
+            color: var(--dark-grey);
+        }
+
+        .modal-section li:before {
+            content: "→ ";
+            color: var(--purple);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .contact-btn {
+            background: var(--purple);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            width: 100%;
+        }
+
+        .contact-btn:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--dark-grey);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--dark-grey);
+        }
+
+        .load-more-container {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .load-more-btn {
+            background: var(--purple);
+            color: var(--white);
+            padding: 1rem 3rem;
+            border: 2px solid var(--purple);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .load-more-btn:hover {
+            background: var(--white);
+            color: var(--purple);
+        }
+
+        .load-more-btn.hidden {
+            display: none;
+        }
+
+        /* Featured section for highlighting speakers */
+        .featured-section {
+            background: var(--grey);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .featured-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .featured-text h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .featured-text p {
+            font-size: 1.1rem;
+            color: var(--dark-grey);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .featured-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--purple);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--dark-grey);
+            margin-top: 0.5rem;
+        }
+
+        .featured-image {
+            aspect-ratio: 1;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: var(--dark-grey);
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Services/Expertise section */
+        .expertise-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 2rem 1rem;
+        }
+
+        .expertise-section h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .expertise-card {
+            background: var(--grey);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .expertise-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .expertise-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .expertise-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--purple);
+        }
+
+        .expertise-card p {
+            color: var(--dark-grey);
+            line-height: 1.6;
+        }
+
+        /* CTA section */
+        .cta-section {
+            background: var(--purple);
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0 0 0;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: var(--white);
+            color: var(--purple);
+            padding: 1rem 3rem;
+            border: 2px solid var(--white);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .featured-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .featured-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                justify-content: center;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .language-switcher {
+                order: 2;
+            }
+
+            .speakers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1rem;
+            }
+
+            /* Adjust stagger for mobile - 2 columns */
+            .speaker-card:nth-child(4n+1),
+            .speaker-card:nth-child(4n+2),
+            .speaker-card:nth-child(4n+3),
+            .speaker-card:nth-child(4n+4) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(2n+1) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(2n+2) {
+                margin-top: 1rem;
+            }
+
+            .speaker-info {
+                padding: 1.5rem 1rem 1rem;
+            }
+
+            .speaker-name {
+                font-size: 1.25rem;
+            }
+
+            .speaker-title {
+                font-size: 0.875rem;
+            }
+
+            .modal-info {
+                padding: 1.5rem;
+            }
+
+            .contact-btn {
+                padding: 0.875rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .hero {
+                padding: 3rem 1rem 2rem;
+            }
+
+            .controls {
+                padding: 1.5rem 1rem 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.625rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .speakers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Single column - remove stagger on mobile */
+            .speaker-card:nth-child(2n+1),
+            .speaker-card:nth-child(2n+2) {
+                margin-top: 0;
+            }
+
+            .modal-image {
+                height: 300px;
+                font-size: 4rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .speakers-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            /* Enhanced stagger for large screens - 4 columns */
+            .speaker-card:nth-child(4n+1) {
+                margin-top: 3rem;
+            }
+
+            .speaker-card:nth-child(4n+2) {
+                margin-top: 3rem;
+            }
+
+            .speaker-card:nth-child(4n+3) {
+                margin-top: 3rem;
+            }
+
+            .speaker-card:nth-child(4n+4) {
+                margin-top: 3rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1199px) {
+            /* 3 columns - adjust stagger */
+            .speaker-card:nth-child(4n+1),
+            .speaker-card:nth-child(4n+2),
+            .speaker-card:nth-child(4n+3),
+            .speaker-card:nth-child(4n+4) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(3n+1) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(3n+2) {
+                margin-top: 1.5rem;
+            }
+
+            .speaker-card:nth-child(3n+3) {
+                margin-top: 3rem;
+            }
+        }
+
+    </style>
+
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        /* Custom scroll behavior for smooth navigation */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Style for the cinematic hero text */
+        .hero-title {
+            animation: fadeIn 2s ease-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        /* Spinner styles (adjusted for light background) */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.2); /* Darker border for visibility */
+            border-top: 4px solid #7877E6; /* Purple top */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Utility to hide sections for SPA routing */
+        .page-content {
+            display: none;
+        }
+        .page-content.active {
+            display: block;
+        }
+    </style>
+
+
+</head>
+<body>
+    <header>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="./index.html" onclick="showSection('index')" class="text-3xl font-extrabold tracking-wider text-text-dark transition duration-300 hover:text-accent-purple">FACETTES</a>
+
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#speakers" data-key="nav_speakers" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Speakers</a>
+                <a href="#services" data-key="nav_services" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Services</a>
+                <a href="./about.html" data-key="nav_services" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">About</a>
+                <a href="#contact" data-key="nav_contact" class="px-5 py-2 text-sm font-semibold bg-accent-purple text-text-light rounded-full hover:bg-accent-hover-purple transition duration-300 tracking-wider">Contact</a>
+
+                <!-- Use data-lang attribute on both buttons and query by [data-lang] -->
+                <div class="language-switcher">
+                    <button class="lang-btn px-3 py-1 text-sm font-semibold text-text-detail rounded-full hover:text-accent-purple transition duration-300 border border-text-detail/50" data-lang="en">EN</button>
+                    <button class="lang-btn px-3 py-1 text-sm font-semibold text-text-detail rounded-full hover:text-accent-purple transition duration-300 border border-text-detail/50" data-lang="fr">FR</button>
+                </div>
+            </nav>
+
+            <div class="flex items-center md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 p-2 rounded-md" aria-label="Open mobile menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+
+                <div class="ml-4 flex gap-2">
+                    <button class="lang-btn mobile-lang" data-lang="en">EN</button>
+                    <button class="lang-btn mobile-lang" data-lang="fr">FR</button>
+                </div>
+            </div>
+        </div>
+
+        <nav id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
+            <a href="#speakers" data-key="nav_speakers" class="block py-3 px-4 text-gray-700 hover:bg-accent-hover-purple font-medium transition rounded-md hover:text-text-light">Speaker</a>
+            <a href="#services" data-key="nav_services" class="block py-3 px-4 text-gray-700 hover:bg-accent-hover-purple font-medium transition rounded-md hover:text-text-light">Services</a>
+            <a href="./about.html" data-key="nav_about" class="block py-3 px-4 text-gray-700 hover:bg-accent-hover-purple font-medium transition rounded-md hover:text-text-light">About</a>
+            <a href="#contact" data-key="nav_contact" class="block py-3 px-4 text-gray-700 hover:bg-accent-hover-purple font-medium transition rounded-md hover:text-text-light">CONTACT</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section id="hero" class="h-[80vh] flex items-center justify-center overflow-hidden relative border-b border-text-detail/10">
+        <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 data-i18n="heroTitle" data-key="hero_tagline" class="hero-title text-5xl sm:text-7xl lg:text-8xl font-black uppercase text-text-dark mb-6 tracking-tighter">
+                Where Bold Ideas Meet <span class="text-accent-purple">Global Reach</span>
+            </h1>
+
+            <p data-i18n="heroSubtitle" data-key="hero_subheading" class="text-xl sm:text-2xl font-light text-text-detail max-w-4xl mx-auto mb-10">
+                The agency for intersectional talent, shaping the future of culture, commerce, and impact.
+            </p>
+
+            <a href="#speakers" data-key="hero_cta" class="inline-block px-10 py-4 text-lg font-semibold bg-accent-purple text-text-light rounded-md shadow-xl hover:bg-accent-hover-purple transition duration-300 transform hover:scale-105 border-2 border-accent-purple uppercase tracking-wider">
+                Explore Talent
+            </a>
+        </div>
+    </section>
+
+    <!-- CONTROLS -->
+    <div class="controls" id="speakers">
+        <div class="search-box">
+            <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Search speakers...">
+        </div>
+        <div class="filter-buttons" id="filterButtons">
+            <button class="filter-btn active" data-category="all" data-i18n="filterAll">All</button>
+        </div>
+    </div>
+
+    <!-- SPEAKERS -->
+    <section class="speakers-container">
+        <div class="loading" id="loading" data-i18n="loading">Loading speakers...</div>
+        <div class="speakers-grid" id="speakersGrid" data-count="0"></div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3 data-i18n="noResultsTitle">No speakers found</h3>
+            <p data-i18n="noResultsText">Try adjusting your search or filters</p>
+        </div>
+
+        <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+            <button class="load-more-btn" id="loadMoreBtn">
+                <span data-i18n="loadMore">Load More Speakers</span>
+            </button>
+        </div>
+    </section>
+
+
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 data-i18n="ctaTitle">Ready to Book a Speaker?</h2>
+            <p data-i18n="ctaText">Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.</p>
+            <a href="#contact" class="cta-button" data-i18n="ctaButton">Contact Us</a>
+        </div>
+    </section>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+
+
+
+<!-- 3. Services Section -->
+        <section id="services" class="py-24 border-b border-text-detail/10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 data-i18n="services_heading" data-key="services_heading" class="text-3xl font-bold mb-2 text-center uppercase tracking-widest text-text-dark">Agency Expertise</h2>
+                    <p data-i18n="services_subtext" data-key="services_subtext" class="text-xl text-text-detail max-w-3xl mx-auto mb-12 text-center">Beyond booking, we ensure seamless execution and maximum impact.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        
+                        <!-- Service Card 1: Access -->
+                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
+                            <div class="text-5xl text-accent-purple mb-6">
+                                <!-- Icon: Calendar -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check"><path d="M12 21h-7c-1.104 0-2-.896-2-2v-14c0-1.104.896-2 2-2h14c1.104 0 2 .896 2 2v8"/><polyline points="10 13 13 16 22 7"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="service_1_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_1_title">Exclusive Speaker Access</h3>
+                                <p data-i18n="service_1_description" class="text-text-detail text-sm" data-key="service_1_description">Direct access to a curated roster of global leaders. We manage negotiations and logistics from start to finish.</p>
+                            </div>
+                        </div>
+
+                        <!-- Service Card 2: Strategy -->
+                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
+                            <div class="text-5xl text-accent-purple mb-6">
+                                <!-- Icon: Users -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="service_2_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_2_title">Content Alignment & Strategy</h3>
+                                <p data-i18n="service_2_description" class="text-text-detail text-sm" data-key="service_2_description">Strategic consultation to match speakers with your audience and event objectives for maximum message resonance, ensuring cultural fit.</p>
+                            </div>
+                        </div>
+
+                        <!-- Service Card 3: Support -->
+                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
+                            <div class="text-5xl text-accent-purple mb-6">
+                                <!-- Icon: Microphone -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="service_3_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_3_title">On-Site Logistics Support</h3>
+                                <p data-i18n="service_3_description" class="text-text-detail text-sm" data-key="service_3_description">Comprehensive support including technical riders, travel coordination, on-site liaison management, and post-event feedback cycles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+
+
+
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24 bg-bg-section border-t border-b border-accent-purple/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 md:grid md:grid-cols-3 md:gap-16 items-start">
+            <div class="md:col-span-1 mb-10 md:mb-0 pt-4">
+                <h2 data-i18n="contact_heading" data-key="contact_heading" class="text-4xl font-black text-text-dark mb-4">CONNECT</h2>
+                <p data-i18n="contact_tagline" data-key="contact_tagline" class="text-xl text-text-detail">Initiate a conversation with our team to find the ideal voice for your next defining moment.</p>
+            </div>
+
+            <form id="contact-form" class="md:col-span-2 space-y-6 bg-bg-main p-8 rounded-xl shadow-2xl border border-accent-purple/50 text-text-dark">
+                <input type="text" id="contact_name" placeholder="Your Name" required class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
+                <input type="email" id="contact_email" placeholder="Your Email" required class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
+                <input id="event-topic" type="text" placeholder="Event Type / Topic Focus (e.g., Q3 Strategy Session on AI)" required class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
+                <textarea id="event-details" rows="4" placeholder="Tell us about your audience, event date, and budget range..." required class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail"></textarea>
+                <button type="submit" data-i18n="form_submit" class="w-full py-3 bg-accent-purple text-text-light font-semibold rounded-md shadow-lg hover:bg-accent-hover-purple transition duration-300 transform hover:scale-[1.01] uppercase tracking-wider">SUBMIT INQUIRY</button>
+                <p data-i18n="contact_response_time" class="text-sm text-text-detail mt-4 text-center">A consultant will be in touch within 24 hours.</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-bg-main py-8 border-t border-text-detail/20 text-text-dark shadow-inner">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center flex-wrap text-center md:text-left">
+            <p data-key="footer_rights" class="text-text-detail text-sm w-full md:w-auto mb-4 md:mb-0">&copy; 2025 Facettes. All rights reserved.</p>
+            <div class="flex space-x-6">
+                <a href="#" class="text-text-detail hover:text-accent-purple transition duration-300 text-sm">LINKEDIN</a>
+                <a href="#" class="text-text-detail hover:text-accent-purple transition duration-300 text-sm">INSTAGRAM</a>
+                <a href="#" class="text-text-detail hover:text-accent-purple transition duration-300 text-sm">EMAIL</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT: dynamic content + speakers -->
+    <script>
+    (function(){
+        // State
+        let contentData = { en: {}, fr: {} };
+        let speakers = [];
+        let currentLang = localStorage.getItem('language') || 'en';
+        let currentFilter = 'all';
+        let searchTerm = '';
+        let displayedCount = 8;
+        const speakersPerLoad = 8;
+        const isMobile = window.innerWidth < 768;
+
+        // Utility
+        const $ = (sel, ctx=document) => ctx.querySelector(sel);
+        const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+        const escapeHtml = (s) => {
+            if (s === undefined || s === null) return '';
+            return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+        };
+
+        // Default translations fallback (keeps your default copy if API doesn't return)
+        const DEFAULT_TRANSLATIONS = {
+            en: {
+                siteName: "FACETTES",
+                navSpeakers: "Speakers",
+                navAbout: "About",
+                navContact: "Contact",
+                heroTitle: "Where Bold Ideas Meet Global Reach",
+                heroSubtitle: "The agency for intersectional talent, shaping the future of culture, commerce, and impact.",
+                searchPlaceholder: "Search speakers...",
+                filterAll: "All",
+                loading: "Loading speakers...",
+                noResultsTitle: "No speakers found",
+                noResultsText: "Try adjusting your search or filters",
+                keyTopicsTitle: "Key Speaking Topics",
+                bookButton: "Book This Speaker",
+                bookMessage: "Contact form coming soon! Email: info@speakerbureau.com",
+                services_heading: "Agency Expertise",
+                services_subtext: "Beyond booking, we ensure seamless execution and maximum impact.",
+                form_submit: "SUBMIT INQUIRY",
+                contact_response_time: "A consultant will be in touch within 24 hours.",
+                loadMore: "Load More Speakers",
+                ctaTitle: "Ready to Book a Speaker?",
+                ctaText: "Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.",
+                ctaButton: "Contact Us"
+            },
+            fr: {
+                siteName: "FACETTES",
+                navSpeakers: "Conférenciers",
+                navAbout: "À propos",
+                navContact: "Contact",
+                heroTitle: "Des Conférenciers Experts, Adaptés à Votre Événement",
+                heroSubtitle: "L'agence de talents intersectionnels, façonnant l'avenir de la culture, du commerce et de l'impact.",
+                searchPlaceholder: "Rechercher des conférenciers...",
+                filterAll: "Tous",
+                loading: "Chargement des conférenciers...",
+                noResultsTitle: "Aucun conférencier trouvé",
+                noResultsText: "Essayez d'ajuster votre recherche ou vos filtres",
+                keyTopicsTitle: "Sujets de Conférence Principaux",
+                bookButton: "Réserver ce Conférencier",
+                bookMessage: "Formulaire de contact bientôt disponible ! Email: info@speakerbureau.com",
+                services_heading: "Services Événementiels Complets",
+                services_subtext: "Au-delà de la réservation, nous assurons une exécution fluide et un impact maximal.",
+                form_submit: "SOUMETTRE LA DEMANDE",
+                contact_response_time: "Un consultant vous contactera dans les 24 heures.",
+                loadMore: "Charger Plus de Conférenciers",
+                ctaTitle: "Prêt à Réserver un Conférencier?",
+                ctaText: "Discutons de la façon dont nos conférenciers peuvent rendre votre prochain événement inoubliable. Contactez-nous dès aujourd'hui.",
+                ctaButton: "Nous Contacter"
+            }
+        };
+
+        // Try to load saved content from localStorage (fallback only)
+        function loadSavedContentFallback(){
+            try {
+                const saved = localStorage.getItem('facettesContent');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.en) Object.assign(DEFAULT_TRANSLATIONS.en, parsed.en);
+                    if (parsed.fr) Object.assign(DEFAULT_TRANSLATIONS.fr, parsed.fr);
+                    console.log('Loaded fallback content from localStorage (admin).');
+                }
+            } catch(e){ /* ignore */ }
+        }
+        loadSavedContentFallback();
+
+        // Apply translations to DOM
+        function applyTranslations() {
+            // prefer contentData loaded from server, otherwise defaults
+            const translations = (contentData && Object.keys(contentData).length) ? contentData : DEFAULT_TRANSLATIONS;
+            // update text elements with [data-i18n]
+            $$('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang] && translations[currentLang][key] !== undefined) {
+                    el.textContent = translations[currentLang][key];
+                } else {
+                    // fallback to default translations
+                    el.textContent = (DEFAULT_TRANSLATIONS[currentLang] && DEFAULT_TRANSLATIONS[currentLang][key]) ? DEFAULT_TRANSLATIONS[currentLang][key] : '';
+                }
+            });
+            // update placeholders
+            $$('[data-i18n-placeholder]').forEach(el => {
+                const attr = el.getAttribute('data-i18n-placeholder');
+                if (contentData && contentData[currentLang] && contentData[currentLang][attr] !== undefined) {
+                    el.placeholder = contentData[currentLang][attr];
+                } else {
+                    el.placeholder = DEFAULT_TRANSLATIONS[currentLang][attr] || '';
+                }
+            });
+            // header nav links (some use data-key)
+            $$('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (contentData && contentData[currentLang] && contentData[currentLang][key] !== undefined) {
+                    el.textContent = contentData[currentLang][key];
+                } else if (DEFAULT_TRANSLATIONS[currentLang] && DEFAULT_TRANSLATIONS[currentLang][key]) {
+                    el.textContent = DEFAULT_TRANSLATIONS[currentLang][key];
+                }
+            });
+
+            // hero title & subtitle (they may have custom tags)
+            const heroTitleEl = $('[data-i18n="heroTitle"]') || $('[data-i18n="hero_tagline"]');
+            if (heroTitleEl) heroTitleEl.textContent = (contentData[currentLang] && contentData[currentLang].heroTitle) ? contentData[currentLang].heroTitle : DEFAULT_TRANSLATIONS[currentLang].heroTitle;
+            const heroSubEl = $('[data-i18n="heroSubtitle"]') || $('[data-i18n="hero_subheading"]');
+            if (heroSubEl) heroSubEl.textContent = (contentData[currentLang] && contentData[currentLang].heroSubtitle) ? contentData[currentLang].heroSubtitle : DEFAULT_TRANSLATIONS[currentLang].heroSubtitle;
+        }
+
+        // Set language button states
+        function setLangButtons() {
+            $$('[data-lang]').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLang);
+            });
+            $$('.mobile-lang').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLang);
+            });
+        }
+
+        // Set language and persist
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            document.documentElement.lang = lang;
+            setLangButtons();
+            applyTranslations();
+            generateFilterButtons(); // topics might change label order if translations exist
+            // re-render speakers to show translated names/titles
+            renderSpeakers();
+        }
+
+        // Fetch content and speakers from API (auto-sync on load)
+        async function bootstrap() {
+            applyTranslations(); // show defaults while fetching
+            try {
+                const [cRes, sRes] = await Promise.all([
+                    fetch('/api/content').catch(()=>null),
+                    fetch('/api/speakers').catch(()=>null)
+                ]);
+
+                if (cRes && cRes.ok) {
+                    const c = await cRes.json();
+                    // prefer server content but merge with defaults so missing keys still show
+                    contentData = Object.assign({}, DEFAULT_TRANSLATIONS, c || {});
+                } else {
+                    contentData = DEFAULT_TRANSLATIONS;
+                }
+
+                if (sRes && sRes.ok) {
+                    speakers = await sRes.json();
+                } else {
+                    // if API not available, try localStorage fallback
+                    const saved = localStorage.getItem('facettesSpeakers');
+                    if (saved) {
+                        speakers = JSON.parse(saved);
+                        console.log('Used localStorage speakers fallback');
+                    } else {
+                        speakers = [];
+                    }
+                }
+
+                // init UI
+                applyTranslations();
+                setLangButtons();
+                generateFilterButtons();
+                // initial display count
+                displayedCount = Math.min(speakersPerLoad, speakers.length || 0) || 8;
+                renderSpeakers();
+                document.getElementById('loading').style.display = 'none';
+            } catch (err) {
+                console.error('Bootstrap error', err);
+                document.getElementById('loading').textContent = (currentLang === 'fr') ? 'Erreur de chargement' : 'Error loading content';
+            }
+        }
+
+        // Filter buttons generation
+        function generateFilterButtons() {
+            const allTopics = new Set();
+            speakers.forEach(s => {
+                const topics = (currentLang === 'fr' && s.topics_fr && s.topics_fr.length) ? s.topics_fr : (s.topics || []);
+                (topics || []).forEach(t => { if (t && t.trim()) allTopics.add(t); });
+            });
+            const sorted = Array.from(allTopics).sort((a,b)=> a.localeCompare(b));
+            const container = document.getElementById('filterButtons');
+            container.innerHTML = `<button class="filter-btn ${currentFilter==='all' ? 'active' : ''}" data-category="all">${escapeHtml((contentData[currentLang] && contentData[currentLang].filterAll) || DEFAULT_TRANSLATIONS[currentLang].filterAll)}</button>` +
+                sorted.map(t => `<button class="filter-btn ${currentFilter===t ? 'active' : ''}" data-category="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join('');
+        }
+
+        // Render speakers (uses displayedCount lazy-loading)
+        function renderSpeakers() {
+            const grid = document.getElementById('speakersGrid');
+            const noResults = document.getElementById('noResults');
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+
+            // apply filter & search
+            const filtered = (speakers || []).filter(s => {
+                const topics = (currentLang === 'fr' && s.topics_fr && s.topics_fr.length) ? s.topics_fr : (s.topics || []);
+                const name = (currentLang === 'fr' && s.name_fr) ? s.name_fr : s.name || '';
+                const title = (currentLang === 'fr' && s.title_fr) ? s.title_fr : s.title || '';
+                const matchesFilter = currentFilter === 'all' || (topics && topics.includes(currentFilter));
+                const q = (searchTerm || '').toLowerCase();
+                const matchesSearch = !q || name.toLowerCase().includes(q) || title.toLowerCase().includes(q) || (topics || []).some(t => t.toLowerCase().includes(q));
+                return matchesFilter && matchesSearch;
+            });
+
+            if (!filtered.length) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                loadMoreContainer.style.display = 'none';
+                return;
+            }
+
+            const toShow = filtered.slice(0, displayedCount);
+            // build HTML preserving original structure
+            grid.innerHTML = toShow.map((speaker, idx) => {
+                const imageContent = speaker.image && speaker.image.startsWith('/uploads') ? `<img src="${escapeHtml(speaker.image)}" alt="${escapeHtml(speaker.name)}" />` : (speaker.image ? escapeHtml(speaker.image) : '👤');
+                const name = (currentLang === 'fr' && speaker.name_fr) ? speaker.name_fr : speaker.name || '';
+                const title = (currentLang === 'fr' && speaker.title_fr) ? speaker.title_fr : speaker.title || '';
+                const topics = (currentLang === 'fr' && speaker.topics_fr && speaker.topics_fr.length) ? speaker.topics_fr : (speaker.topics || []);
+                return `
+                    <div class="speaker-card" data-parallax-speed="0" onclick="openModal(${speakers.indexOf(speaker)})">
+                        <div class="speaker-image-container">
+                            <div class="speaker-image-bg">${imageContent}</div>
+                        </div>
+                        <div class="speaker-info">
+                            <div class="speaker-name">${escapeHtml(name)}</div>
+                            <div class="speaker-details">
+                                <div class="speaker-title">${escapeHtml(title)}</div>
+                                <div class="speaker-topics">
+                                    ${(topics || []).slice(0,3).map(t=>`<span class="topic-tag">${escapeHtml(t)}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            grid.setAttribute('data-count', toShow.length);
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            // load more visibility
+            if (filtered.length > displayedCount) {
+                loadMoreContainer.style.display = 'block';
+            } else {
+                loadMoreContainer.style.display = 'none';
+            }
+
+            // init parallax (only on non-mobile)
+            if (!isMobile) {
+                setTimeout(initParallax, 120); // give DOM a tick
+            }
+        }
+
+        // Load more
+        function loadMoreSpeakers() {
+            displayedCount = Math.min((speakers || []).length, displayedCount + speakersPerLoad);
+            renderSpeakers();
+            window.scrollTo({ top: document.getElementById('loadMoreContainer').offsetTop - 120, behavior: 'smooth' });
+        }
+
+        // Parallax (kept similar to your implementation)
+        function initParallax() {
+            const cards = document.querySelectorAll('.speaker-card');
+            const speakersContainer = document.getElementById('speakers');
+            if (!cards.length) return;
+            let ticking = false;
+            function updateParallax(){
+                const containerRect = speakersContainer.getBoundingClientRect();
+                if (containerRect.top < window.innerHeight && containerRect.bottom > 0) {
+                    const rel = -containerRect.top;
+                    cards.forEach(card => {
+                        const speed = parseFloat(card.dataset.parallaxSpeed) || 0;
+                        if (speed === 0) return;
+                        const offset = rel * speed;
+                        card.style.transform = `translateY(${offset}px)`;
+                    });
+                } else {
+                    cards.forEach(card => { card.style.transform = `translateY(0px)`; });
+                }
+            }
+            function onScroll(){
+                if (!ticking) {
+                    requestAnimationFrame(()=>{ updateParallax(); ticking=false; });
+                    ticking = true;
+                }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            updateParallax();
+        }
+
+        // Modal open/close
+        window.openModal = function(index) {
+            const s = speakers[index];
+            if (!s) return;
+            const modal = $('#modal');
+            const body = $('#modalBody');
+            const imageContent = s.image && s.image.startsWith('/uploads') ? `<img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.name)}">` : (s.image ? escapeHtml(s.image) : '👤');
+            const name = (currentLang === 'fr' && s.name_fr) ? s.name_fr : s.name || '';
+            const title = (currentLang === 'fr' && s.title_fr) ? s.title_fr : s.title || '';
+            const bio = (currentLang === 'fr' && s.bio_fr) ? s.bio_fr : s.bio || '';
+            const keyTopics = (currentLang === 'fr' && s.keyTopics_fr && s.keyTopics_fr.length) ? s.keyTopics_fr : (s.keyTopics || []);
+            const topics = (currentLang === 'fr' && s.topics_fr && s.topics_fr.length) ? s.topics_fr : (s.topics || []);
+            body.innerHTML = `
+                <div class="modal-image">${imageContent}</div>
+                <div class="modal-info">
+                    <h2 class="modal-name">${escapeHtml(name)}</h2>
+                    <p class="modal-title">${escapeHtml(title)}</p>
+                    <div class="modal-bio">${escapeHtml(bio)}</div>
+                    ${keyTopics && keyTopics.length ? `<div class="modal-section"><h3>${escapeHtml((contentData[currentLang] && contentData[currentLang].keyTopicsTitle) || DEFAULT_TRANSLATIONS[currentLang].keyTopicsTitle)}</h3><ul>${keyTopics.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul></div>` : ''}
+                    <div class="speaker-topics">${(topics || []).map(t=>`<span class="topic-tag" style="background: var(--grey); color: var(--dark-grey);">${escapeHtml(t)}</span>`).join('')}</div>
+                    <div style="margin-top:2rem;">
+                        <button class="contact-btn" onclick="alert('${escapeHtml((contentData[currentLang] && contentData[currentLang].bookMessage) || DEFAULT_TRANSLATIONS[currentLang].bookMessage)}')">${escapeHtml((contentData[currentLang] && contentData[currentLang].bookButton) || DEFAULT_TRANSLATIONS[currentLang].bookButton)}</button>
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+        };
+        window.closeModal = function(){ $('#modal').classList.remove('active'); };
+        // click outside close
+        $('#modal').addEventListener('click', (e)=> { if (e.target.id === 'modal') closeModal(); });
+
+        // Search input
+        $('#searchInput').addEventListener('input', (e) => {
+            searchTerm = e.target.value || '';
+            displayedCount = speakersPerLoad;
+            renderSpeakers();
+        });
+
+        // Filter buttons click (delegation)
+        document.getElementById('filterButtons').addEventListener('click', (e) => {
+            if (!e.target.classList.contains('filter-btn')) return;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            currentFilter = e.target.dataset.category || 'all';
+            displayedCount = speakersPerLoad;
+            renderSpeakers();
+        });
+
+        // Mobile menu toggles
+        $('#mobile-menu-button').addEventListener('click', ()=> {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Language buttons (desktop + mobile)
+        $$('[data-lang]').forEach(btn => {
+            btn.addEventListener('click', ()=> setLanguage(btn.getAttribute('data-lang')));
+        });
+        $$('.mobile-lang').forEach(btn => {
+            btn.addEventListener('click', ()=> setLanguage(btn.getAttribute('data-lang')));
+        });
+
+        // Load more button
+        $('#loadMoreBtn').addEventListener('click', loadMoreSpeakers);
+
+        // Contact form: simple client-side handler (send to server if you have endpoint)
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            // Basic form handling: gather values and POST to /api/contact (if you implement)
+            const payload = {
+                name: $('#contact_name').value,
+                email: $('#contact_email').value,
+                topic: $('#event-topic').value,
+                details: $('#event-details').value
+            };
+            // If you have a server endpoint /api/contact, send it; otherwise show a thank-you
+            try {
+                const res = await fetch('/api/contact', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) }).catch(()=>null);
+                if (res && res.ok) {
+                    alert((currentLang==='fr') ? 'Merci! Nous avons bien reçu votre demande.' : 'Thanks — your inquiry has been submitted.');
+                    e.target.reset();
+                } else {
+                    alert((currentLang==='fr') ? 'Merci! Nous avons bien reçu votre demande (offline fallback).' : 'Thanks — your inquiry has been noted.');
+                    e.target.reset();
+                }
+            } catch(err) {
+                console.error(err);
+                alert('Error submitting form');
+            }
+        });
+
+        // keyboard escape to close modal
+        window.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeModal(); });
+
+        // Initialize
+        setLanguage(currentLang);
+        bootstrap();
+
+        // Expose a function for the admin to trigger a reload if needed
+        window.reloadSiteData = async function() {
+            document.getElementById('loading').style.display = 'block';
+            await bootstrap();
+        };
+    })();
+    </script>
+</body>
+</html>
