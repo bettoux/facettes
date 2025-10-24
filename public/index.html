@@ -1699,7 +1699,7 @@
             if (!s) return;
             const modal = $('#modal');
             const body = $('#modalBody');
-            const imageContent = s.image && s.image.startsWith('/uploads') ? `<img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.name)}">` : (s.image ? escapeHtml(s.image) : '👤');
+            const imageContent = s.image && s.image.startsWith('/uploads') ? `<img src="${escapeHtml(s.image)}" class="max-w-md" alt="${escapeHtml(s.name)}">` : (s.image ? escapeHtml(s.image) : '👤');
             const name = (currentLang === 'fr' && s.name_fr) ? s.name_fr : s.name || '';
             const title = (currentLang === 'fr' && s.title_fr) ? s.title_fr : s.title || '';
             const bio = (currentLang === 'fr' && s.bio_fr) ? s.bio_fr : s.bio || '';
@@ -1799,3 +1799,4 @@
     </script>
 </body>
 </html>
+
