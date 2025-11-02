@@ -1,0 +1,14 @@
+[
+  {
+    "username": "admin",
+    "passwordHash": "$2b$10$/SVvLsVKhxpb402PO9wgdOyMUwyVQ9rpOy5vS/7JNlTVBZmm7MnY.",
+    "createdAt": "2025-11-02T05:20:05.047Z",
+    "passwordChangedAt": "2025-11-02T05:30:19.753Z"
+  },
+  {
+    "username": "bettara",
+    "passwordHash": "$2b$10$.hwmbMHWQtHNeYZsDOoiyuqeKhghA4kxosOsbv3ZAN/rSlpvTtUFG",
+    "createdAt": "2025-11-02T05:37:47.876Z",
+    "createdBy": "admin"
+  }
+]
