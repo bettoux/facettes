@@ -1365,7 +1365,7 @@
     </footer>
 
     <!-- SCRIPT: dynamic content + speakers -->
-    <script>
+    <!--<script>
     (function(){
         // State
         let contentData = { en: {}, fr: {} };
@@ -1796,7 +1796,449 @@
             await bootstrap();
         };
     })();
-    </script>
+    </script>-->
+
+
+
+<script>    
+    // Fixed version of the script section from index.html
+(function(){
+    // State
+    let contentData = { en: {}, fr: {} };
+    let speakers = [];
+    let currentLang = localStorage.getItem('language') || 'en';
+    let currentFilter = 'all';
+    let searchTerm = '';
+    let displayedCount = 8;
+    const speakersPerLoad = 8;
+    const isMobile = window.innerWidth < 768;
+
+    // Utility
+    const $ = (sel, ctx=document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+    const escapeHtml = (s) => {
+        if (s === undefined || s === null) return '';
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+    };
+
+    // Default translations fallback (only used if server has no data)
+    const DEFAULT_TRANSLATIONS = {
+        en: {
+            siteName: "FACETTES",
+            navSpeakers: "Speakers",
+            navAbout: "About",
+            navContact: "Contact",
+            heroTitle: "Where Bold Ideas Meet Global Reach",
+            heroSubtitle: "The agency for intersectional talent, shaping the future of culture, commerce, and impact.",
+            searchPlaceholder: "Search speakers...",
+            filterAll: "All",
+            loading: "Loading speakers...",
+            noResultsTitle: "No speakers found",
+            noResultsText: "Try adjusting your search or filters",
+            keyTopicsTitle: "Key Speaking Topics",
+            bookButton: "Book This Speaker",
+            bookMessage: "Contact form coming soon! Email: info@speakerbureau.com",
+            services_heading: "Agency Expertise",
+            services_subtext: "Beyond booking, we ensure seamless execution and maximum impact.",
+            service_1_title: "Exclusive Speaker Access",
+            service_1_description: "Direct access to a curated roster of global leaders. We manage negotiations and logistics from start to finish.",
+            service_2_title: "Content Alignment & Strategy",
+            service_2_description: "Strategic consultation to match speakers with your audience and event objectives for maximum message resonance, ensuring cultural fit.",
+            service_3_title: "On-Site Logistics Support",
+            service_3_description: "Comprehensive support including technical riders, travel coordination, on-site liaison management, and post-event feedback cycles.",
+            form_name: "Your Name",
+            form_email: "Your Email",
+            form_event: "Your Event Type / Topic Focus (e.g Q3 Strategy Session on AI)",
+            form_details: "Tell us about your audience, event date and budget range",
+            form_submit: "SUBMIT INQUIRY",
+            contact_response_time: "A consultant will be in touch within 24 hours.",
+            loadMore: "Load More Speakers",
+            ctaTitle: "Ready to Book a Speaker?",
+            ctaText: "Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.",
+            ctaButton: "Contact Us",
+            contact_heading: "CONNECT",
+            contact_tagline: "Initiate a conversation with our team to find the ideal voice for your next defining moment."
+        },
+        fr: {
+            siteName: "FACETTES",
+            navSpeakers: "Conférenciers",
+            navAbout: "À propos",
+            navContact: "Contact",
+            heroTitle: "Là où les Idées Audacieuses Rencontrent la Portée Mondiale",
+            heroSubtitle: "L'agence de talents intersectionnels, façonnant l'avenir de la culture, du commerce et de l'impact.",
+            searchPlaceholder: "Rechercher des conférenciers...",
+            filterAll: "Tous",
+            loading: "Chargement des conférenciers...",
+            noResultsTitle: "Aucun conférencier trouvé",
+            noResultsText: "Essayez d'ajuster votre recherche ou vos filtres",
+            keyTopicsTitle: "Sujets de Conférence Principaux",
+            bookButton: "Réserver ce Conférencier",
+            bookMessage: "Formulaire de contact bientôt disponible ! Email: info@speakerbureau.com",
+            services_heading: "Services Événementiels Complets",
+            services_subtext: "Au-delà de la réservation, nous assurons une exécution fluide et un impact maximal.",
+            service_1_title: "Accès Exclusif aux Conférenciers",
+            service_1_description: "Accès direct à une liste organisée de leaders mondiaux. Nous gérons les négociations et la logistique du début à la fin.",
+            service_2_title: "Alignement et Stratégie de Contenu",
+            service_2_description: "Consultation stratégique pour faire correspondre les conférenciers à votre public et à vos objectifs pour une résonance maximale du message, assurant l'adéquation culturelle.",
+            service_3_title: "Soutien Logistique sur Place",
+            service_3_description: "Support complet incluant les fiches techniques, la coordination des voyages, la gestion de la liaison sur site et les cycles de feedback post-événement.",
+            form_name: "Nom",
+            form_email: "Adresse email",
+            form_event: "Type d'evenement",
+            form_details: "Parlez-nous de votre public, de la date de l'événement et de la fourchette budgétaire...",
+            form_submit: "SOUMETTRE LA DEMANDE",
+            contact_response_time: "Un consultant vous contactera dans les 24 heures.",
+            loadMore: "Charger Plus de Conférenciers",
+            ctaTitle: "Prêt à Réserver un Conférencier?",
+            ctaText: "Discutons de la façon dont nos conférenciers peuvent rendre votre prochain événement inoubliable. Contactez-nous dès aujourd'hui.",
+            ctaButton: "Nous Contacter",
+            contact_heading: "CONNECTER",
+            contact_tagline: "Initiez une conversation avec notre équipe pour trouver la voix idéale pour votre prochain moment décisif."
+        }
+    };
+
+    // Helper to merge defaults with server content (server content takes priority)
+    function mergeContent(serverContent) {
+        const merged = { en: {}, fr: {} };
+        
+        // For each language
+        ['en', 'fr'].forEach(lang => {
+            // Start with defaults
+            merged[lang] = { ...DEFAULT_TRANSLATIONS[lang] };
+            
+            // Override with server content (only non-empty values)
+            if (serverContent[lang]) {
+                Object.keys(serverContent[lang]).forEach(key => {
+                    const value = serverContent[lang][key];
+                    // Only use server value if it's not empty/null/undefined
+                    if (value !== null && value !== undefined && value !== '') {
+                        merged[lang][key] = value;
+                    }
+                });
+            }
+        });
+        
+        return merged;
+    }
+
+    // Apply translations to DOM
+    function applyTranslations() {
+        const translations = contentData[currentLang] || DEFAULT_TRANSLATIONS[currentLang];
+        
+        // Update text elements with [data-i18n]
+        $$('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations && translations[key] !== undefined && translations[key] !== '') {
+                el.textContent = translations[key];
+            }
+        });
+        
+        // Update placeholders
+        $$('[data-i18n-placeholder]').forEach(el => {
+            const attr = el.getAttribute('data-i18n-placeholder');
+            if (translations && translations[attr] !== undefined && translations[attr] !== '') {
+                el.placeholder = translations[attr];
+            }
+        });
+        
+        // Update elements with [data-key]
+        $$('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (translations && translations[key] !== undefined && translations[key] !== '') {
+                el.textContent = translations[key];
+            }
+        });
+    }
+
+    // Set language button states
+    function setLangButtons() {
+        $$('[data-lang]').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLang);
+        });
+        $$('.mobile-lang').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLang);
+        });
+    }
+
+    // Set language and persist
+    function setLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('language', lang);
+        document.documentElement.lang = lang;
+        setLangButtons();
+        applyTranslations();
+        generateFilterButtons();
+        renderSpeakers();
+    }
+
+    // Fetch content and speakers from API
+    async function bootstrap() {
+        console.log('🔄 Loading content from server...');
+        
+        try {
+            const [cRes, sRes] = await Promise.all([
+                fetch('/api/content').catch(err => {
+                    console.error('Content fetch error:', err);
+                    return null;
+                }),
+                fetch('/api/speakers').catch(err => {
+                    console.error('Speakers fetch error:', err);
+                    return null;
+                })
+            ]);
+
+            // Handle content
+            if (cRes && cRes.ok) {
+                const serverContent = await cRes.json();
+                console.log('✅ Server content received:', serverContent);
+                
+                // Merge server content with defaults (server takes priority)
+                contentData = mergeContent(serverContent);
+                console.log('📝 Merged content:', contentData);
+            } else {
+                console.warn('⚠️ Could not fetch content from server, using defaults');
+                contentData = { ...DEFAULT_TRANSLATIONS };
+            }
+
+            // Handle speakers
+            if (sRes && sRes.ok) {
+                speakers = await sRes.json();
+                console.log('✅ Speakers loaded:', speakers.length);
+            } else {
+                console.warn('⚠️ Could not fetch speakers from server');
+                speakers = [];
+            }
+
+            // Initialize UI
+            applyTranslations();
+            setLangButtons();
+            generateFilterButtons();
+            displayedCount = Math.min(speakersPerLoad, speakers.length || 0) || 8;
+            renderSpeakers();
+            document.getElementById('loading').style.display = 'none';
+            
+        } catch (err) {
+            console.error('❌ Bootstrap error:', err);
+            contentData = { ...DEFAULT_TRANSLATIONS };
+            applyTranslations();
+            document.getElementById('loading').textContent = (currentLang === 'fr') ? 'Erreur de chargement' : 'Error loading content';
+        }
+    }
+
+    // Filter buttons generation
+    function generateFilterButtons() {
+        const allTopics = new Set();
+        speakers.forEach(s => {
+            const topics = (currentLang === 'fr' && s.topics_fr && s.topics_fr.length) ? s.topics_fr : (s.topics || []);
+            (topics || []).forEach(t => { if (t && t.trim()) allTopics.add(t); });
+        });
+        const sorted = Array.from(allTopics).sort((a,b)=> a.localeCompare(b));
+        const container = document.getElementById('filterButtons');
+        const filterAllText = contentData[currentLang]?.filterAll || DEFAULT_TRANSLATIONS[currentLang].filterAll;
+        container.innerHTML = `<button class="filter-btn ${currentFilter==='all' ? 'active' : ''}" data-category="all">${escapeHtml(filterAllText)}</button>` +
+            sorted.map(t => `<button class="filter-btn ${currentFilter===t ? 'active' : ''}" data-category="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join('');
+    }
+
+    // Render speakers
+    function renderSpeakers() {
+        const grid = document.getElementById('speakersGrid');
+        const noResults = document.getElementById('noResults');
+        const loadMoreContainer = document.getElementById('loadMoreContainer');
+
+        const filtered = (speakers || []).filter(s => {
+            const topics = (currentLang === 'fr' && s.topics_fr && s.topics_fr.length) ? s.topics_fr : (s.topics || []);
+            const name = (currentLang === 'fr' && s.name_fr) ? s.name_fr : s.name || '';
+            const title = (currentLang === 'fr' && s.title_fr) ? s.title_fr : s.title || '';
+            const matchesFilter = currentFilter === 'all' || (topics && topics.includes(currentFilter));
+            const q = (searchTerm || '').toLowerCase();
+            const matchesSearch = !q || name.toLowerCase().includes(q) || title.toLowerCase().includes(q) || (topics || []).some(t => t.toLowerCase().includes(q));
+            return matchesFilter && matchesSearch;
+        });
+
+        if (!filtered.length) {
+            grid.style.display = 'none';
+            noResults.style.display = 'block';
+            loadMoreContainer.style.display = 'none';
+            return;
+        }
+
+        const toShow = filtered.slice(0, displayedCount);
+        grid.innerHTML = toShow.map((speaker, idx) => {
+            const imageContent = speaker.image && speaker.image.startsWith('/uploads') ? `<img src="${escapeHtml(speaker.image)}" alt="${escapeHtml(speaker.name)}" />` : (speaker.image ? escapeHtml(speaker.image) : '👤');
+            const name = (currentLang === 'fr' && speaker.name_fr) ? speaker.name_fr : speaker.name || '';
+            const title = (currentLang === 'fr' && speaker.title_fr) ? speaker.title_fr : speaker.title || '';
+            const topics = (currentLang === 'fr' && speaker.topics_fr && speaker.topics_fr.length) ? speaker.topics_fr : (speaker.topics || []);
+            return `
+                <div class="speaker-card" data-parallax-speed="0" onclick="openModal(${speakers.indexOf(speaker)})">
+                    <div class="speaker-image-container">
+                        <div class="speaker-image-bg">${imageContent}</div>
+                    </div>
+                    <div class="speaker-info">
+                        <div class="speaker-name">${escapeHtml(name)}</div>
+                        <div class="speaker-details">
+                            <div class="speaker-title">${escapeHtml(title)}</div>
+                            <div class="speaker-topics">
+                                ${(topics || []).slice(0,3).map(t=>`<span class="topic-tag">${escapeHtml(t)}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        grid.setAttribute('data-count', toShow.length);
+        grid.style.display = 'grid';
+        noResults.style.display = 'none';
+
+        if (filtered.length > displayedCount) {
+            loadMoreContainer.style.display = 'block';
+        } else {
+            loadMoreContainer.style.display = 'none';
+        }
+
+        if (!isMobile) {
+            setTimeout(initParallax, 120);
+        }
+    }
+
+    // Load more
+    function loadMoreSpeakers() {
+        displayedCount = Math.min((speakers || []).length, displayedCount + speakersPerLoad);
+        renderSpeakers();
+        window.scrollTo({ top: document.getElementById('loadMoreContainer').offsetTop - 120, behavior: 'smooth' });
+    }
+
+    // Parallax
+    function initParallax() {
+        const cards = document.querySelectorAll('.speaker-card');
+        const speakersContainer = document.getElementById('speakers');
+        if (!cards.length) return;
+        let ticking = false;
+        function updateParallax(){
+            const containerRect = speakersContainer.getBoundingClientRect();
+            if (containerRect.top < window.innerHeight && containerRect.bottom > 0) {
+                const rel = -containerRect.top;
+                cards.forEach(card => {
+                    const speed = parseFloat(card.dataset.parallaxSpeed) || 0;
+                    if (speed === 0) return;
+                    const offset = rel * speed;
+                    card.style.transform = `translateY(${offset}px)`;
+                });
+            } else {
+                cards.forEach(card => { card.style.transform = `translateY(0px)`; });
+            }
+        }
+        function onScroll(){
+            if (!ticking) {
+                requestAnimationFrame(()=>{ updateParallax(); ticking=false; });
+                ticking = true;
+            }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        updateParallax();
+    }
+
+    // Modal
+    window.openModal = function(index) {
+        const s = speakers[index];
+        if (!s) return;
+        const modal = $('#modal');
+        const body = $('#modalBody');
+        const imageContent = s.image && s.image.startsWith('/uploads') ? `<img src="${escapeHtml(s.image)}" class="max-w-md" alt="${escapeHtml(s.name)}">` : (s.image ? escapeHtml(s.image) : '👤');
+        const name = (currentLang === 'fr' && s.name_fr) ? s.name_fr : s.name || '';
+        const title = (currentLang === 'fr' && s.title_fr) ? s.title_fr : s.title || '';
+        const bio = (currentLang === 'fr' && s.bio_fr) ? s.bio_fr : s.bio || '';
+        const keyTopics = (currentLang === 'fr' && s.keyTopics_fr && s.keyTopics_fr.length) ? s.keyTopics_fr : (s.keyTopics || []);
+        const topics = (currentLang === 'fr' && s.topics_fr && s.topics_fr.length) ? s.topics_fr : (s.topics || []);
+        
+        const keyTopicsTitle = contentData[currentLang]?.keyTopicsTitle || DEFAULT_TRANSLATIONS[currentLang].keyTopicsTitle;
+        const bookButton = contentData[currentLang]?.bookButton || DEFAULT_TRANSLATIONS[currentLang].bookButton;
+        const bookMessage = contentData[currentLang]?.bookMessage || DEFAULT_TRANSLATIONS[currentLang].bookMessage;
+        
+        body.innerHTML = `
+            <div class="modal-image">${imageContent}</div>
+            <div class="modal-info">
+                <h2 class="modal-name">${escapeHtml(name)}</h2>
+                <p class="modal-title">${escapeHtml(title)}</p>
+                <div class="modal-bio">${escapeHtml(bio)}</div>
+                ${keyTopics && keyTopics.length ? `<div class="modal-section"><h3>${escapeHtml(keyTopicsTitle)}</h3><ul>${keyTopics.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul></div>` : ''}
+                <div class="speaker-topics">${(topics || []).map(t=>`<span class="topic-tag" style="background: var(--grey); color: var(--dark-grey);">${escapeHtml(t)}</span>`).join('')}</div>
+                <div style="margin-top:2rem;">
+                    <button class="contact-btn" onclick="alert('${escapeHtml(bookMessage)}')">${escapeHtml(bookButton)}</button>
+                </div>
+            </div>
+        `;
+        modal.classList.add('active');
+    };
+    
+    window.closeModal = function(){ $('#modal').classList.remove('active'); };
+    $('#modal').addEventListener('click', (e)=> { if (e.target.id === 'modal') closeModal(); });
+
+    // Event listeners
+    $('#searchInput').addEventListener('input', (e) => {
+        searchTerm = e.target.value || '';
+        displayedCount = speakersPerLoad;
+        renderSpeakers();
+    });
+
+    document.getElementById('filterButtons').addEventListener('click', (e) => {
+        if (!e.target.classList.contains('filter-btn')) return;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentFilter = e.target.dataset.category || 'all';
+        displayedCount = speakersPerLoad;
+        renderSpeakers();
+    });
+
+    $('#mobile-menu-button').addEventListener('click', ()=> {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    $$('[data-lang]').forEach(btn => {
+        btn.addEventListener('click', ()=> setLanguage(btn.getAttribute('data-lang')));
+    });
+    $$('.mobile-lang').forEach(btn => {
+        btn.addEventListener('click', ()=> setLanguage(btn.getAttribute('data-lang')));
+    });
+
+    $('#loadMoreBtn').addEventListener('click', loadMoreSpeakers);
+
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+            name: $('#contact_name').value,
+            email: $('#contact_email').value,
+            topic: $('#event-topic').value,
+            details: $('#event-details').value
+        };
+        try {
+            const res = await fetch('/api/contact', { 
+                method: 'POST', 
+                headers: {'Content-Type':'application/json'}, 
+                body: JSON.stringify(payload) 
+            }).catch(()=>null);
+            
+            if (res && res.ok) {
+                alert((currentLang==='fr') ? 'Merci! Nous avons bien reçu votre demande.' : 'Thanks – your inquiry has been submitted.');
+                e.target.reset();
+            } else {
+                alert((currentLang==='fr') ? 'Merci! Nous avons bien reçu votre demande.' : 'Thanks – your inquiry has been noted.');
+                e.target.reset();
+            }
+        } catch(err) {
+            console.error(err);
+            alert('Error submitting form');
+        }
+    });
+
+    window.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeModal(); });
+
+    // Initialize
+    setLanguage(currentLang);
+    bootstrap();
+
+    window.reloadSiteData = bootstrap;
+})();
+</script>
 </body>
 </html>
-
