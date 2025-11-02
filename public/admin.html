@@ -26,10 +26,75 @@
 
   <div class="container mx-auto px-4 py-8 max-w-6xl">
     <!-- Header -->
-    <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg shadow-lg p-8 mb-8">
+    <!--<div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg shadow-lg p-8 mb-8">
+      <h1 class="text-4xl font-black mb-2">Facettes Content Manager</h1>
+      <p class="text-purple-200">Edit your speaker bureau website content in English and French</p>
+    </div> -->
+
+    <!-- NEW header-->
+      <!-- Replace the existing header section in admin.html with this -->
+<div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg shadow-lg p-8 mb-8">
+  <div class="flex justify-between items-start">
+    <div>
       <h1 class="text-4xl font-black mb-2">Facettes Content Manager</h1>
       <p class="text-purple-200">Edit your speaker bureau website content in English and French</p>
     </div>
+    <div class="flex items-center space-x-4">
+      <!-- Username Display -->
+      <div class="text-right">
+        <p class="text-sm text-purple-200">Logged in as</p>
+        <p class="font-semibold" id="usernameDisplay">Admin</p>
+      </div>
+      
+      <!-- Settings Dropdown -->
+      <div class="relative">
+        <button onclick="toggleSettingsMenu()" class="bg-purple-700 hover:bg-purple-900 text-white p-3 rounded-lg transition flex items-center space-x-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div id="settingsMenu" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl z-50 border border-gray-200">
+          <div class="py-2">
+            <button onclick="changePassword(); toggleSettingsMenu();" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-purple-50 flex items-center space-x-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+              </svg>
+              <span>Change Password</span>
+            </button>
+            <hr class="my-2">
+            <button onclick="logout()" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 flex items-center space-x-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+              </svg>
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Add this helper function for the settings menu
+function toggleSettingsMenu() {
+  const menu = document.getElementById('settingsMenu');
+  menu.classList.toggle('hidden');
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('settingsMenu');
+  const button = e.target.closest('button[onclick="toggleSettingsMenu()"]');
+  
+  if (!menu.contains(e.target) && !button) {
+    menu.classList.add('hidden');
+  }
+});
+</script>
 
     <!-- Language Tabs -->
     <div class="flex space-x-4 mb-6">
@@ -288,6 +353,212 @@
       <div id="speakersList" class="space-y-4"></div>
     </div>
 
+    <!-- Add this section in admin.html AFTER the Speakers Management section and BEFORE the Action Buttons -->
+
+<!-- User Management Section -->
+<div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+  <div class="flex justify-between items-center mb-4 border-b-2 border-purple-600 pb-2">
+    <h2 class="text-2xl font-bold text-gray-800">👥 Manage Users (<span id="userCount">0</span>)</h2>
+    <button onclick="addNewUser()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition flex items-center space-x-2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+      </svg>
+      <span>Add New User</span>
+    </button>
+  </div>
+
+  <div id="usersList" class="space-y-4"></div>
+</div>
+
+<script>
+// User Management Functions
+
+let usersData = [];
+
+// Load users from API
+async function loadUsers() {
+  try {
+    const res = await fetch('/api/users', { credentials: 'same-origin' });
+    if (!res.ok) throw new Error('Failed to load users');
+    usersData = await res.json();
+    renderUsersList();
+  } catch (err) {
+    console.error('Error loading users:', err);
+    document.getElementById('usersList').innerHTML = '<p class="text-red-500">Failed to load users</p>';
+  }
+}
+
+// Render users list
+function renderUsersList() {
+  const container = document.getElementById('usersList');
+  const countElement = document.getElementById('userCount');
+  
+  countElement.textContent = usersData.length;
+  
+  if (!usersData.length) {
+    container.innerHTML = '<p class="text-gray-500 text-center py-8">No users found.</p>';
+    return;
+  }
+  
+  const currentUsername = document.getElementById('usernameDisplay').textContent;
+  
+  container.innerHTML = usersData.map((user) => {
+    const isCurrentUser = user.username === currentUsername;
+    return `
+      <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition ${isCurrentUser ? 'bg-purple-50 border-purple-300' : ''}">
+        <div class="flex justify-between items-start">
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
+              <h3 class="text-lg font-bold text-gray-800">${escapeHtml(user.username)}</h3>
+              ${isCurrentUser ? '<span class="text-xs bg-purple-600 text-white px-2 py-1 rounded">You</span>' : ''}
+            </div>
+            <div class="mt-2 space-y-1 text-sm text-gray-600">
+              <p>📅 Created: ${user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</p>
+              ${user.passwordChangedAt ? `<p>🔑 Password changed: ${new Date(user.passwordChangedAt).toLocaleDateString()}</p>` : ''}
+              ${user.lastLogin ? `<p>🕐 Last login: ${new Date(user.lastLogin).toLocaleDateString()}</p>` : ''}
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <button 
+              onclick="resetUserPassword('${escapeHtml(user.username)}')" 
+              class="text-blue-600 hover:text-blue-800 p-2 rounded hover:bg-blue-50"
+              title="Reset Password"
+            >
+              🔑 Reset
+            </button>
+            ${!isCurrentUser ? `
+              <button 
+                onclick="deleteUser('${escapeHtml(user.username)}')" 
+                class="text-red-600 hover:text-red-800 p-2 rounded hover:bg-red-50"
+                title="Delete User"
+              >
+                🗑️ Delete
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Add new user
+async function addNewUser() {
+  const username = prompt('Enter new username (letters, numbers, _, - only):');
+  if (!username) return;
+  
+  if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+    alert('Username can only contain letters, numbers, underscores, and hyphens');
+    return;
+  }
+  
+  const password = prompt('Enter password for new user (min 8 characters):');
+  if (!password) return;
+  
+  if (password.length < 8) {
+    alert('Password must be at least 8 characters');
+    return;
+  }
+  
+  const confirmPassword = prompt('Confirm password:');
+  if (password !== confirmPassword) {
+    alert('Passwords do not match');
+    return;
+  }
+  
+  try {
+    const res = await fetch('/api/users', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+      credentials: 'same-origin'
+    });
+    
+    const data = await res.json();
+    
+    if (!res.ok) {
+      throw new Error(data.error || 'Failed to create user');
+    }
+    
+    showSuccess(`User "${username}" created successfully!`);
+    await loadUsers();
+  } catch (err) {
+    alert('Error creating user: ' + err.message);
+  }
+}
+
+// Delete user
+async function deleteUser(username) {
+  if (!confirm(`Are you sure you want to delete user "${username}"?\n\nThis action cannot be undone.`)) {
+    return;
+  }
+  
+  try {
+    const res = await fetch(`/api/users/${encodeURIComponent(username)}`, {
+      method: 'DELETE',
+      credentials: 'same-origin'
+    });
+    
+    const data = await res.json();
+    
+    if (!res.ok) {
+      throw new Error(data.error || 'Failed to delete user');
+    }
+    
+    showSuccess(`User "${username}" deleted successfully!`);
+    await loadUsers();
+  } catch (err) {
+    alert('Error deleting user: ' + err.message);
+  }
+}
+
+// Reset user password
+async function resetUserPassword(username) {
+  const newPassword = prompt(`Enter new password for user "${username}" (min 8 characters):`);
+  if (!newPassword) return;
+  
+  if (newPassword.length < 8) {
+    alert('Password must be at least 8 characters');
+    return;
+  }
+  
+  const confirmPassword = prompt('Confirm new password:');
+  if (newPassword !== confirmPassword) {
+    alert('Passwords do not match');
+    return;
+  }
+  
+  try {
+    const res = await fetch(`/api/users/${encodeURIComponent(username)}/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ newPassword }),
+      credentials: 'same-origin'
+    });
+    
+    const data = await res.json();
+    
+    if (!res.ok) {
+      throw new Error(data.error || 'Failed to reset password');
+    }
+    
+    showSuccess(`Password reset successfully for user "${username}"!`);
+    await loadUsers();
+  } catch (err) {
+    alert('Error resetting password: ' + err.message);
+  }
+}
+
+// Load users when page loads (add to existing DOMContentLoaded or create new one)
+document.addEventListener('DOMContentLoaded', function() {
+  // Wait a bit to ensure auth is checked first
+  setTimeout(() => {
+    loadUsers();
+  }, 500);
+});
+</script>
+
+
     <!-- Action Buttons -->
     <div class="flex flex-col sm:flex-row gap-4 sticky bottom-4">
       <button onclick="saveContent()" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg shadow-xl transition transform hover:scale-105 flex items-center justify-center space-x-2">
@@ -308,6 +579,132 @@
 
   <!-- ================== SCRIPT ================== -->
   <script>
+
+  //-- =========== AUTH =========
+  // Add this script at the very beginning of the existing script section in admin.html
+  // This should be placed BEFORE the existing "document.addEventListener('DOMContentLoaded', loadContent);"
+
+  // Authentication check - redirects to login if not authenticated
+  // === AUTHENTICATION SCRIPT - Place at the TOP of your script section ===
+
+// Authentication check - redirects to login if not authenticated
+    async function checkAuthentication() {
+      try {
+        const response = await fetch('/api/auth/check', {
+          credentials: 'same-origin' // Ensure cookies are sent
+        });
+        const data = await response.json();
+        
+        console.log('🔐 Auth check:', data);
+        
+        if (!data.authenticated) {
+          console.warn('❌ Not authenticated - redirecting to login');
+          window.location.href = '/login.html';
+          return false;
+        }
+        
+        // Show username in header if available
+        if (data.username) {
+          const usernameDisplay = document.getElementById('usernameDisplay');
+          if (usernameDisplay) {
+            usernameDisplay.textContent = data.username;
+          }
+        }
+        
+        console.log('✅ Authenticated as:', data.username);
+        return true;
+      } catch (err) {
+        console.error('❌ Auth check failed:', err);
+        window.location.href = '/login.html';
+        return false;
+      }
+    }
+
+    // Logout function
+    async function logout() {
+      if (!confirm('Are you sure you want to logout?')) return;
+      
+      try {
+        const response = await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        
+        if (response.ok) {
+          window.location.href = '/login.html';
+        } else {
+          alert('Logout failed');
+        }
+      } catch (err) {
+        console.error('Logout error:', err);
+        alert('Logout failed');
+      }
+    }
+
+    // Change password function
+    async function changePassword() {
+      const currentPassword = prompt('Enter your current password:');
+      if (!currentPassword) return;
+      
+      const newPassword = prompt('Enter your new password (min 8 characters):');
+      if (!newPassword) return;
+      
+      if (newPassword.length < 8) {
+        alert('New password must be at least 8 characters');
+        return;
+      }
+      
+      const confirmPassword = prompt('Confirm your new password:');
+      if (newPassword !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+      
+      try {
+        const response = await fetch('/api/auth/change-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ currentPassword, newPassword }),
+          credentials: 'same-origin' // Important: ensure cookies are sent
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          alert('Password changed successfully!');
+        } else {
+          alert(data.error || 'Failed to change password');
+        }
+      } catch (err) {
+        console.error('Password change error:', err);
+        alert('Failed to change password: ' + err.message);
+      }
+    }
+
+// Wrap API calls with auth error handling
+const originalFetch = window.fetch;
+window.fetch = async function(...args) {
+  const response = await originalFetch(...args);
+  
+  // If we get a 401, redirect to login (but not for change-password endpoint)
+  if (response.status === 401 && !args[0].includes('/api/auth/change-password')) {
+    alert('Your session has expired. Please login again.');
+    window.location.href = '/login.html';
+  }
+  
+  return response;
+};
+
+// Check authentication before doing anything else
+checkAuthentication().then(isAuthenticated => {
+  if (isAuthenticated) {
+    console.log('✅ Authenticated - loading admin panel');
+  }
+});
+
+
+
+
   // ======== State ========
   let contentData = { en: {}, fr: {} };
   let speakersData = [];
